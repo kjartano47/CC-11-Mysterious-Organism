@@ -57,6 +57,19 @@ const pAequorFactory = (num, arr) => {
 					"%"
 			);
 		},
+		willLikelySurvive() {
+			let goodBase = 0;
+			let baseSize = this.dna.length;
+			for (let i = 0; i < this.dna.length; i++) {
+				if (this.dna[i] === "C" || this.dna[i] === "G") {
+					goodBase++;
+				}
+			}
+			console.log("baseSize is : " + baseSize);
+			console.log("goodBase is : " + goodBase);
+			console.log(((goodBase / baseSize) * 100).toFixed());
+			return ((goodBase / baseSize) * 100).toFixed() >= 60 ? true : false;
+		},
 	};
 };
 
@@ -64,22 +77,29 @@ let num1 = 1;
 let testArr = [
 	"C",
 	"G",
+	"G",
+	"T",
+	"G",
+	"G",
+	"G",
+	"T",
+	"G",
+	"G",
+	"T",
+	"T",
 	"T",
 	"T",
 	"C",
-	"G",
-	"T",
-	"T",
-	"T",
-	"T",
-	"A",
-	"A",
-	"T",
-	"T",
-	"G",
 ];
 
-let testObject1 = pAequorFactory(2, mockUpStrand());
+let counter = 0;
+let pAequorArray = [];
+while (counter <= 30) {
+	let contenderStrand = pAequorFactory(counter, mockUpStrand());
 
-let outcome = pAequorFactory(num1, testArr);
-console.log(outcome.compareDNA(testObject1));
+	if (contenderStrand.willLikelySurvive()) {
+		pAequorArray.push(contenderStrand);
+		counter++;
+	}
+}
+console.log(pAequorArray);
